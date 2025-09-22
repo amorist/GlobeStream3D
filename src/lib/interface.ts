@@ -4,7 +4,7 @@ import { Position } from "geojson";
 type RGB = `rgb(${number}, ${number}, ${number})`;
 type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
 type HEX = `#${string}`;
-type Color = RGB | RGBA | HEX | string;
+type Color = RGB | RGBA | HEX | string | "transparent";
 export const InitConfig = {
   R: 160,
   enableZoom: true,

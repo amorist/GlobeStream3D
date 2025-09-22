@@ -166,6 +166,31 @@ export default class ChartScene {
     this.mainContainer.scale.set(zoom, zoom, zoom);
     this.animate();
     dom.appendChild(this.renderer.domElement);
+    
+    // 配置canvas元素样式以支持透明背景
+    const canvas = this.renderer.domElement;
+    canvas.style.display = 'block';  // 确保canvas是块级元素
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    
+    // 如果是透明背景，确保容器样式正确
+    const bgColor = this.options.config.bgStyle?.color;
+    const bgOpacity = this.options.config.bgStyle?.opacity ?? 1;
+    
+    if (bgColor === 'transparent' || bgOpacity === 0) {
+      // 确保容器允许透明背景
+      if (!dom.style.background && !dom.style.backgroundColor) {
+        dom.style.background = 'transparent';
+      }
+      
+      // 确保父元素也支持透明
+      if (dom.parentElement) {
+        const parent = dom.parentElement;
+        if (!parent.style.background && !parent.style.backgroundColor) {
+          parent.style.background = 'transparent';
+        }
+      }
+    }
   }
 
   /**
@@ -295,16 +320,40 @@ export default class ChartScene {
    * @returns {WebGLRenderer} The created renderer.
    */
   createRender(): WebGLRenderer {
+    // 创建支持透明背景的WebGL渲染器
     const renderer = new WebGLRenderer({
       antialias: true,
-      alpha: true,
+      alpha: true,                    // 启用alpha通道
+      premultipliedAlpha: false,      // 禁用预乘alpha，重要
+      preserveDrawingBuffer: true,    // 保留绘图缓冲区
     });
+    
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(this.style.width, this.style.height);
-    renderer.setClearColor(
-      this.options.config.bgStyle?.color!,
-      this.options.config.bgStyle?.opacity
-    );
+    
+    // 处理透明背景配置
+    const bgColor = this.options.config.bgStyle?.color;
+    const bgOpacity = this.options.config.bgStyle?.opacity ?? 1;
+    
+    if (bgColor === 'transparent' || bgOpacity === 0) {
+      // 完全透明背景
+      renderer.setClearColor(0x000000, 0);  // 透明清除色
+      renderer.setClearAlpha(0);            // 透明alpha
+      
+      // 确保canvas元素样式透明
+      const canvas = renderer.domElement;
+      canvas.style.backgroundColor = 'transparent';
+      canvas.style.backgroundImage = 'none';
+      canvas.style.opacity = '1';
+      
+      // 重要：确保canvas的alpha通道正确工作
+      renderer.autoClear = true;
+      renderer.autoClearColor = true;
+    } else {
+      // 非透明背景
+      renderer.setClearColor(bgColor!, bgOpacity);
+    }
+    
     return renderer;
   }
 
@@ -375,6 +424,8 @@ export default class ChartScene {
       if (this.shouldRotate()) {
         this.mainContainer.rotateY(this.options.rotateSpeed!);
       }
+      
+      // 渲染场景
       this.renderer.render(this.scene, this.camera);
     }
     if (this.options.mode === "3d") {

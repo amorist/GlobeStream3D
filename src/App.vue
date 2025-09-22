@@ -18,6 +18,7 @@ onMounted(() => {
   const dom = document.getElementById("container");
   const dom1 = document.getElementById("container1");
   if (dom && dom1) {
+    // 示例1: 默认配置（不透明背景）
     chartInstance = chart.init({
       dom,
       helper: true,
@@ -92,8 +93,14 @@ onMounted(() => {
           opacity: 0.5,
           height: 0.5,
         },
+        // 透明背景示例配置（取消注释使用）
+        // bgStyle: {
+        //   color: "transparent",
+        //   opacity: 0,
+        // },
       },
     });
+    // 示例2: 透明背景配置（取消注释使用）
     chartInstance1 = chart.init({
       dom: dom1,
       helper: true,
@@ -129,7 +136,8 @@ onMounted(() => {
           duration: 5000,
         },
         bgStyle: {
-          color: "#0e0c15",
+          color: "transparent", // 透明背景配置
+          opacity: 0, // 完全透明
         },
         hoverRegionStyle: {
           show: false,
@@ -341,6 +349,78 @@ function add() {
     },
   ]);
 }
+function toggleTransparentBackground() {
+  // 切换透明背景 - 通过重新初始化来实现
+  const currentConfig = chartInstance1.options.config;
+  if (currentConfig.bgStyle?.color === "transparent") {
+    // 恢复默认背景
+    chartInstance1.options.config.bgStyle = {
+      color: "#0e0c15",
+      opacity: 1,
+    };
+  } else {
+    // 设置为透明背景
+    chartInstance1.options.config.bgStyle = {
+      color: "transparent",
+      opacity: 0,
+    };
+  }
+  
+  // 清除容器内容并重新初始化
+  const container = document.getElementById("container1") as HTMLElement;
+  container.innerHTML = ''; // 清空容器
+  
+  // 重新初始化以应用新的背景配置
+  chartInstance1.destroy();
+  
+  // 重新创建实例
+  chartInstance1 = chart.init({
+    dom: container,
+    helper: true,
+    map: "world",
+    autoRotate: true,
+    mode: "3d",
+    config: chartInstance1.options.config,
+  });
+  
+  // 使用存储的飞行线数据重新渲染
+  const flyLineData = [
+    {
+      from: {
+        id: "1",
+        lon: -23.0075,
+        lat: 50.4296,
+      },
+      to: { id: 2, lon: 26.1223, lat: -7.8756 },
+    },
+    {
+      from: {
+        lon: 142.8123,
+        lat: -58.9813,
+        style: {
+          color: "yellow",
+        },
+      },
+      to: {
+        lon: 157.0064,
+        lat: 10.7816,
+        style: {
+          color: "yellow",
+        },
+      },
+      style: {
+        pathStyle: {
+          color: "yellow",
+        },
+        flyLineStyle: {
+          color: "yellow",
+        },
+      },
+    },
+  ];
+  chartInstance1.setData("flyLine", flyLineData);
+}
+
 function del() {
   chartInstance1.remove("bar", "removeAll");
 }
@@ -349,6 +429,7 @@ function del() {
 <template>
   <div @click="del">移除</div>
   <div @click="add">新增</div>
+  <div @click="toggleTransparentBackground">切换透明背景</div>
   <div style="position: relative">
     <div id="container1"></div>
   </div>
@@ -361,10 +442,16 @@ function del() {
   width: 800px;
   height: 800px;
   margin-bottom: 40px;
+  /* 添加背景以测试透明背景效果 */
+  background: linear-gradient(45deg, #1e3c72, #2a5298);
+  border-radius: 10px;
 }
 
 #container1 {
   width: 800px;
   height: 800px;
+  /* 添加背景以测试透明背景效果 */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
 }
 </style>
