@@ -1,4 +1,4 @@
-<h4 align="right"><strong>English</strong> | <a href="https://github.com/JavaScriptam/earth-flyLine/blob/main">简体中文</a></h4>
+<h4 align="right"><strong>English</strong> | <a href="https://github.com/JavaScriptam/globestream3d/blob/main">简体中文</a></h4>
 
 # GlobeStream3D
 
@@ -22,13 +22,13 @@ Building 3D large screen earth visualization based on three.js, essential for ho
 ## 📦 Install
 
 ```bash
-npm install earth-flyline
+npm install globestream3d
 ```
 
 ## 🚗 Get Start
 
 ```javascript
-import earthFlyLine from "earth-flyline";
+import earthFlyLine from "globestream3d";
 //Please download the map file first (can be downloaded from a third party) and then register the map file for this project in the "src/map/world"
 //If you don't want to use a map file, you can also do it in the form of a picture file. For more information, please see the document.
 import geojson from 'xxx/path/world.json'
@@ -354,4 +354,4 @@ Thanks for the features provided by these awesome projects.
 
  [lodash](https://github.com/lodash/lodash)
 
- [delaunator](https://github.com/mapbox/delaunator) 
+ [delaunator](https://github.com/mapbox/delaunator)

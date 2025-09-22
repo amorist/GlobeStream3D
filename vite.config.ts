@@ -19,7 +19,7 @@ export default ({ mode }) => {
       },
     });
   } else {
-    base = "/earth-flyLine";
+    base = "/globestream3d";
     Object.assign(libConfig, {
       outDir: "docs",
     });

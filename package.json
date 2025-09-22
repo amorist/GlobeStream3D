@@ -1,18 +1,26 @@
 {
-  "name": "earth-flyline",
+  "name": "globestream3d",
   "version": "1.7.0",
-  "description": "GlobeStream3D是基于threejs开发的可视化3D地球纯js组件，包括迁徙飞线，涟漪,支持react vue angular等前端框架",
+  "description": "GlobeStream3D - 基于Three.js的专业3D地球可视化组件，支持迁徙飞线、涟漪效果、透明背景，兼容React/Vue/Angular等前端框架",
   "keywords": [
+    "globestream3d",
     "threejs",
     "3d",
     "earth",
-    "flyline",
-    "js",
-    "飞线",
-    "transparent-background",
     "globe",
+    "flyline",
     "visualization",
-    "webgl"
+    "webgl",
+    "transparent-background",
+    "3d-earth",
+    "javascript",
+    "typescript",
+    "react",
+    "vue",
+    "angular",
+    "飞线",
+    "涟漪",
+    "地球可视化"
   ],
   "np": {
     "yarn": false,

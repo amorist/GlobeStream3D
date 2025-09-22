@@ -23,7 +23,7 @@
 
 [文档地址(netlify)](https://globestream3d.netlify.app/)
 
-[文档地址(vercel)](https://earth-flyline-docs.vercel.app/)
+[文档地址(vercel)](https://globestream3d-docs.vercel.app/)
 
 
 
@@ -40,5 +40,5 @@
 
  [lodash](https://github.com/lodash/lodash)
 
- [delaunator](https://github.com/mapbox/delaunator) 
+ [delaunator](https://github.com/mapbox/delaunator)
 
